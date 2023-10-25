@@ -99,6 +99,33 @@ public class ZippoTest {
         ;
     }
 
+    // Soru : "http://api.zippopotam.us/us/90210"  endpoint in dönen
+    // place dizisinin dizi uzunluğunun 1 olduğunu doğrulayınız.
+
+    @Test
+    public void bodyArrayHasSizeTest(){
+        given()
+
+                .when()
+                .get("http://api.zippopotam.us/us/90210")
+
+                .then()
+                .body("places", hasSize(1)); // places ın item size 1 e eşit mi
+        ;
+    }
+
+    @Test
+    public void bodyArrayHasSizeTest2(){
+        given()
+
+                .when()
+                .get("http://api.zippopotam.us/us/90210")
+
+                .then()
+                .body("places.size()", equalTo(21)); // places ın item size 1 e eşit mi
+        ;
+    }
+
 
 }
 
