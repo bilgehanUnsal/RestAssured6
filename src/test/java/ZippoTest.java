@@ -122,7 +122,7 @@ public class ZippoTest {
                 .get("http://api.zippopotam.us/us/90210")
 
                 .then()
-                .body("places.size()", equalTo(21)); // places ın item size 1 e eşit mi
+                .body("places.size()", equalTo(1)); // places ın item size 1 e eşit mi
         ;
     }
 
