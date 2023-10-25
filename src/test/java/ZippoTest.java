@@ -49,7 +49,7 @@ public class ZippoTest {
     }
 
     @Test
-    public void test3(){
+    public void checkCountryInResponseBody(){
 
         given()
 
@@ -57,13 +57,29 @@ public class ZippoTest {
                 .get("http://api.zippopotam.us/us/90210")
 
                 .then()
-                .log().body()
+                //.log().body()
                 .statusCode(200)  // assertion
                 .body("country", equalTo("United States")) //assertion
+                // body nin country değişkeni "United States" eşit Mİ
         ;
     }
 
+    // Soru : "http://api.zippopotam.us/us/90210"  endpoint indne dönen
+    // place dizisinin ilk elemanının state değerinin  "California"
+    // olduğunu doğrulayınız
 
+    @Test
+    public void checkStateInResponseBody(){
+        given()
+
+                .when()
+                .get("http://api.zippopotam.us/us/90210")
+
+                .then()
+                .statusCode(200)
+                .body("places[0].state", equalTo("California"));
+        ;
+    }
 
 
 
