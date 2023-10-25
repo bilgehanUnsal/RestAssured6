@@ -6,6 +6,7 @@ body.country                        body("country")
 body.'post code'                    body("post Code")
                                     body("places[0].state")
                                     body("places.state")  -> dizideki bütün stateleri verir
+                                    body("places.'place name'")  -> dizideki bütün stateleri verir
 
 {
     "post code": "90210",

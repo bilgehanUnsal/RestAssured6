@@ -64,12 +64,12 @@ public class ZippoTest {
         ;
     }
 
-    // Soru : "http://api.zippopotam.us/us/90210"  endpoint indne dönen
-    // place dizisinin ilk elemanının state değerinin  "California"
-    // olduğunu doğrulayınız
 
     @Test
     public void checkStateInResponseBody(){
+        // Soru : "http://api.zippopotam.us/us/90210"  endpoint indne dönen
+        // place dizisinin ilk elemanının state değerinin  "California"
+        // olduğunu doğrulayınız
         given()
 
                 .when()
@@ -81,6 +81,23 @@ public class ZippoTest {
         ;
     }
 
+
+    @Test
+    public void checkHasItem(){
+        // Soru : "http://api.zippopotam.us/tr/01000"  endpoint in dönen
+        // place dizisinin herhangi bir elemanında  "Dörtağaç Köyü" değerinin
+        // olduğunu doğrulayınız
+        given()
+
+                .when()
+                .get("http://api.zippopotam.us/tr/01000")
+
+                .then()
+                //.log().body()
+                .body("places.'place name'", hasItem("Dörtağaç Köyü"))
+                .statusCode(200)
+        ;
+    }
 
 
 }
