@@ -126,6 +126,25 @@ public class ZippoTest {
         ;
     }
 
+    @Test
+    public void combiningTest(){
+
+        given()
+                .when()
+
+
+                .then()
+        ;
+    }
+
+
+
+
+
+
+
+
+
 
 }
 
