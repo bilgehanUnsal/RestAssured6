@@ -77,7 +77,7 @@ public class ZippoTest {
 
                 .then()
                 .statusCode(200)
-                .body("places[0].state", equalTo("California"));
+                .body("places[0].state", equalTo("California"))
         ;
     }
 
@@ -131,13 +131,31 @@ public class ZippoTest {
 
         given()
                 .when()
-
+                .get("http://api.zippopotam.us/us/90210")
 
                 .then()
+                .statusCode(200)
+                .body("places", hasSize(1))
+                .body("places[0].state", equalTo("California"))
+                .body("places[0].'place name'", equalTo("Beverly Hills"))
         ;
     }
 
+    @Test
+    public void pathParamTest(){
 
+        given()
+                .pathParam("ulke","us")
+                .pathParam("postaKod",90210)
+                .log().uri() // request link çalışmadan önceki hali
+
+                .when()
+                .get("http://api.zippopotam.us/{ulke}/{postaKod}")
+
+                .then()
+                .statusCode(200)
+        ;
+    }
 
 
 
