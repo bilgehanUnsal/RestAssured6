@@ -161,7 +161,7 @@ public class ZippoTest {
     public void queryParamTest(){
         // https://gorest.co.in/public/v1/users?page=3
         given()
-                .param("page",1) // ?page=1  şeklinde linke ekleniyor
+                .param("page",1) // ?page=1  şeklinde linke ekleniyor  // queryParam ile de kullanılabilir
                 .log().uri()
 
                 .when()
@@ -171,11 +171,33 @@ public class ZippoTest {
                 .statusCode(200)
                 .log().body()
         ;
-
     }
 
+    // https://gorest.co.in/public/v1/users?page=3
+    // bu linkteki 1 den 10 kadar sayfaları çağırdığınızda response daki donen page degerlerinin
+    // çağrılan page nosu ile aynı olup olmadığını kontrol ediniz.
 
+    @Test
+    public void queryParamTest2(){
+        // https://gorest.co.in/public/v1/users?page=3
+        // bu linkteki 1 den 10 kadar sayfaları çağırdığınızda response daki donen page degerlerinin
+        // çağrılan page nosu ile aynı olup olmadığını kontrol ediniz.
 
+        for (int i = 1; i <= 10 ; i++) {
+            given()
+                    .param("page", i)
+                    .log().uri()
+
+                    .when()
+                    .get("https://gorest.co.in/public/v1/users")
+
+                    .then()
+                    .statusCode(200)
+                    //.log().body()
+                    .body("meta.pagination.page", equalTo(i))
+            ;
+        }
+    }
 
 
 
