@@ -5,6 +5,7 @@ import io.restassured.http.ContentType;
 import io.restassured.internal.RequestSpecificationImpl;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -64,7 +65,7 @@ public class ZippoTest {
                 .get("http://api.zippopotam.us/us/90210")
 
                 .then()
-                //.log().body()
+                .log().body()
                 .statusCode(200)  // assertion
                 .body("country", equalTo("United States")) //assertion
                 // body nin country değişkeni "United States" eşit Mİ
@@ -216,7 +217,7 @@ public class ZippoTest {
 
         responseSpec = new ResponseSpecBuilder()
                 .expectStatusCode(200)  // statusCode(200)
-                .log(LogDetail.BODY)
+                .log(LogDetail.BODY)  //log().body()
                 .expectContentType(ContentType.JSON)
                 .build();
     }
