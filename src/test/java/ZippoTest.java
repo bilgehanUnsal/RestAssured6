@@ -1,4 +1,11 @@
+import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.builder.ResponseSpecBuilder;
+import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
+import io.restassured.internal.RequestSpecificationImpl;
+import io.restassured.specification.RequestSpecification;
+import io.restassured.specification.ResponseSpecification;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.*;
@@ -173,10 +180,6 @@ public class ZippoTest {
         ;
     }
 
-    // https://gorest.co.in/public/v1/users?page=3
-    // bu linkteki 1 den 10 kadar sayfaları çağırdığınızda response daki donen page degerlerinin
-    // çağrılan page nosu ile aynı olup olmadığını kontrol ediniz.
-
     @Test
     public void queryParamTest2(){
         // https://gorest.co.in/public/v1/users?page=3
@@ -198,6 +201,41 @@ public class ZippoTest {
             ;
         }
     }
+
+    RequestSpecification requestSpec;
+    ResponseSpecification responseSpec;
+
+    @BeforeClass
+    public void setup(){
+        baseURI = "https://gorest.co.in/public/v1";
+
+        requestSpec= new RequestSpecBuilder()
+                .setContentType(ContentType.JSON)
+                .log(LogDetail.URI)  // log().uri()
+                .build();
+
+        responseSpec = new ResponseSpecBuilder()
+                .expectStatusCode(200)  // statusCode(200)
+                .log(LogDetail.BODY)
+                .expectContentType(ContentType.JSON)
+                .build();
+    }
+
+    @Test
+    public void requestResponseSpecificationn(){
+        given()
+                .param("page",1)
+                .spec(requestSpec)
+
+                .when()
+                .get("/users") // http hok ise baseUri baş tarafına gelir.
+
+                .then()
+                .spec(responseSpec)
+        ;
+    }
+
+
 
 
 
