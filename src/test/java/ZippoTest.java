@@ -157,6 +157,22 @@ public class ZippoTest {
         ;
     }
 
+    @Test
+    public void queryParamTest(){
+        // https://gorest.co.in/public/v1/users?page=3
+        given()
+                .param("page",1) // ?page=1  şeklinde linke ekleniyor
+                .log().uri()
+
+                .when()
+                .get("https://gorest.co.in/public/v1/users") // ?page=1
+
+                .then()
+                .statusCode(200)
+                .log().body()
+        ;
+
+    }
 
 
 
