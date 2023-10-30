@@ -50,4 +50,15 @@ public class Place {
     public void setLatitude(String latitude) {
         this.latitude = latitude;
     }
+
+    @Override
+    public String toString() {
+        return "Place{" +
+                "placename='" + placename + '\'' +
+                ", longitude='" + longitude + '\'' +
+                ", state='" + state + '\'' +
+                ", stateabbreviation='" + stateabbreviation + '\'' +
+                ", latitude='" + latitude + '\'' +
+                '}';
+    }
 }

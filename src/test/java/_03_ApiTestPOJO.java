@@ -1,4 +1,5 @@
 import Model.Location;
+import Model.Place;
 import org.testng.annotations.Test;
 
 import java.awt.*;
@@ -21,6 +22,22 @@ public class _03_ApiTestPOJO {
                 .then()
                 .extract().body().as(Location.class) // Location Kalıbına göre
         ;       // dönen body bilgisi Location Class kalıbıyla çevir.
+
+        System.out.println("locationNesnesi = " + locationNesnesi);
+
+        System.out.println("locationNesnesi.getCountry() = " +
+                                locationNesnesi.getCountry());
+
+        System.out.println("locationNesnesi.getPlaces() = " +
+                                locationNesnesi.getPlaces());
+
+        for(Place p : locationNesnesi.getPlaces())
+            System.out.println("p = " + p);
+
+        // JSonaDonustur(locationNesnesi); developer bu şekilde dönüştürmüştü
+        // Json.Serialise(locationNesnesi);  bende tersine deSerialize yaptım.
+        // yani NESNE yi elde ettim.
+
 
     }
 
