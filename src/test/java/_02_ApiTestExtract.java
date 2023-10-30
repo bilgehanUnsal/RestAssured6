@@ -1,6 +1,8 @@
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.util.List;
+
 import static io.restassured.RestAssured.given;
 
 public class _02_ApiTestExtract {
@@ -75,12 +77,44 @@ public class _02_ApiTestExtract {
                         .get("https://gorest.co.in/public/v1/users")
 
                         .then()
+                        .log().body()
                         .extract().path("meta.pagination.limit");
                 ;
 
         System.out.println("limit = " + limit);
         Assert.assertTrue(limit==10);
     }
+
+    @Test
+    public void extractingJsonPath5(){
+
+        List<Integer> idler=
+                given()
+                        .when()
+                        .get("https://gorest.co.in/public/v1/users")
+
+                        .then()
+                        .extract().path("data.id");
+        ;
+
+        System.out.println("idler = " + idler);
+    }
+
+    @Test
+    public void extractingJsonPath6(){
+        // yukarıdaki testten sonra aynı endpointin sonunda dönen bütün name leri yazdırınız.
+        List<String> names=
+                given()
+                        .when()
+                        .get("https://gorest.co.in/public/v1/users")
+
+                        .then()
+                        .extract().path("data.name");
+        ;
+
+        System.out.println("names = " + names);
+    }
+
 
 }
 
