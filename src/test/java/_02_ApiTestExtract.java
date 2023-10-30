@@ -1,3 +1,4 @@
+import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -115,6 +116,31 @@ public class _02_ApiTestExtract {
         System.out.println("names = " + names);
     }
 
+
+    @Test
+    public void extractingJsonPathResponsAll(){
+
+        Response donenData=
+                given()
+                        .when()
+                        .get("https://gorest.co.in/public/v1/users")
+
+                        .then()
+                        .extract().response()
+        ;
+
+        List<Integer> idler= donenData.path("data.id");
+        List<String> isimler= donenData.path("data.name");
+        int limit = donenData.path("meta.pagination.limit");
+
+        System.out.println("idler = " + idler);
+        System.out.println("isimler = " + isimler);
+        System.out.println("limit = " + limit);
+
+        Assert.assertTrue(isimler.contains("Mahesh Menon"));
+        Assert.assertTrue(idler.contains(5599126));
+        Assert.assertTrue(limit==10);
+    }
 
 }
 
