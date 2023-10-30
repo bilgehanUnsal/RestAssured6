@@ -42,7 +42,30 @@ public class _03_ApiTestPOJO {
     }
 
 
+    @Test
+    public void extractPOJO_Soru()
+    {
+        // http://api.zippopotam.us/tr/01000  endpointinden dönen verilerden "Dörtağaç Köyü" ait bilgileri yazdırınız
 
+        Location locationNesnesi =
+                given()
+
+                        .when()
+                        .get("http://api.zippopotam.us/tr/01000")
+
+                        .then()
+                        .extract().body().as(Location.class)
+                ;
+
+
+        for(Place p : locationNesnesi.getPlaces())
+        {
+             if (p.getPlacename().equalsIgnoreCase("Dörtağaç Köyü")){
+                 System.out.println("p = " + p);
+             }
+        }
+
+    }
 
 
 }
