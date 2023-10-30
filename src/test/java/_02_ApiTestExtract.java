@@ -39,6 +39,7 @@ public class _02_ApiTestExtract {
                         .get("http://api.zippopotam.us/us/90210")
 
                         .then()
+                        .log().body()
                         .extract().path("places[0].state")
                 ;
 
@@ -140,6 +141,7 @@ public class _02_ApiTestExtract {
         Assert.assertTrue(isimler.contains("Mahesh Menon"));
         Assert.assertTrue(idler.contains(5599126));
         Assert.assertTrue(limit==10);
+
     }
 
 }
