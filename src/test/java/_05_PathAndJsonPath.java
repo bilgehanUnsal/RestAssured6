@@ -1,5 +1,6 @@
 import Model.Location;
 import Model.Place;
+import Model.User;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
 
@@ -80,7 +81,27 @@ public class _05_PathAndJsonPath {
     // https://gorest.co.in/public/v1/users  endpointte dönen Sadece Data Kısmını POJO
     // dönüşümü ile alarak yazdırınız.
 
+    @Test
+    public void getUsersV1(){
 
+        List<User> dataUsers=
+        given()
+
+                .when()
+                .get("https://gorest.co.in/public/v1/users")
+
+                .then()
+                //.log().body()
+                .extract().jsonPath().getList("data", User.class);
+        ;
+
+        System.out.println("dataUsers.get(0).getEmail() = " +
+                dataUsers.get(0).getEmail());
+
+        for (User u: dataUsers)
+            System.out.println("u = " + u);
+
+    }
 
 
 
