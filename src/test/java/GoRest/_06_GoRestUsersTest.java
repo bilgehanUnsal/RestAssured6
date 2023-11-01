@@ -170,9 +170,34 @@ public class _06_GoRestUsersTest {
       }
 
       // user delete API testini yapınız
+      @Test(dependsOnMethods = "updateUser")
+      public void deleteUser(){
 
+            given()
+                    .spec(reqSpec)
+                    .when()
+                    .delete(""+userID)
 
+                    .then()
+                    //.log().all()
+                    .statusCode(204)
+            ;
+      }
 
+      // user delete negatif API testini yapınız
+      @Test(dependsOnMethods = "deleteUser")
+      public void deleteUserNegative(){
+
+            given()
+                    .spec(reqSpec)
+                    .when()
+                    .delete(""+userID)
+
+                    .then()
+                    //.log().all()
+                    .statusCode(404)
+            ;
+      }
 
 
 
