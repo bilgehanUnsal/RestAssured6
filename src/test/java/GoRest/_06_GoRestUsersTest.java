@@ -149,7 +149,27 @@ public class _06_GoRestUsersTest {
             ;
       }
 
+      @Test(dependsOnMethods = "getUserById")
+      public void updateUser(){
+            Map<String,String> updateUser=new HashMap<>();
+            updateUser.put("name","ismet temur");
 
+            given()
+                    .spec(reqSpec)
+                    .body(updateUser)
+
+                    .when()
+                    .put(""+userID)
+
+                    .then()
+                    .log().body()
+                    .statusCode(200)
+                    .body("id",equalTo(userID))
+                    .body("name", equalTo("ismet temur"))
+            ;
+      }
+
+      // user delete API testini yapınız
 
 
 
