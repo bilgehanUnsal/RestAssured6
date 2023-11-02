@@ -101,7 +101,7 @@ public class CountryTest {
        ;
    }
 
-   // updat eCountry testini yapınız
+   // update Country testini yapınız
     @Test(dependsOnMethods = "createCountryNegative")
     public void updateCountry(){
         String newCountryName="Updated Country"+randomUreteci.number().digits(5);
@@ -124,5 +124,88 @@ public class CountryTest {
         ;
     }
 
+    // Delete Country testini yapınız
+    @Test(dependsOnMethods = "updateCountry")
+    public void deleteCountry()
+    {
+        given()
+                .spec(reqSpec)
+                .when()
+                .delete("/school-service/api/countries/"+countryID)
+
+                .then()
+                .log().body()
+                .statusCode(200)
+        ;
+    }
+
+    // Delete Country testinin Negative test halini yapınız
+    // dönen mesajın "Country not found" olduğunu doğrulayınız
+    @Test(dependsOnMethods = "deleteCountry")
+    public void deleteCountryNegative()
+    {
+        given()
+                .spec(reqSpec)
+                .when()
+                .delete("/school-service/api/countries/"+countryID)
+
+                .then()
+                .log().body()
+                .statusCode(400)
+                .body("message", equalTo("Country not found"))
+        ;
+    }
+
+   // Aşağıdaki bölüm translate göndermemiz gerektiğindeki seçeneklerimizdir.
+    @Test
+    public void createCountryAllParamater(){
+
+        rndCountryName= randomUreteci.address().country()+randomUreteci.address().countryCode();
+        rndCountryCode= randomUreteci.address().countryCode();
+
+        Object[] arr=new Object[1];
+        Map<String,Object> newCountry=new HashMap<>();
+        newCountry.put("name",rndCountryName);
+        newCountry.put("code",rndCountryCode);
+        newCountry.put("translateName", new Object[1] ); //arr
+
+                given()
+                        .spec(reqSpec)
+                        .body(newCountry)
+                        //.log().all()
+                        .when()
+                        .post("school-service/api/countries")
+
+                        .then()
+                        .log().body()
+                        .statusCode(201)
+                        .extract().path("id");
+        ;
+    }
+
+    @Test
+    public void createCountryAllParamaterClass(){
+
+        rndCountryName= randomUreteci.address().country()+randomUreteci.address().countryCode();
+        rndCountryCode= randomUreteci.address().countryCode();
+
+        Country newCountry=new Country();
+        newCountry.name=rndCountryName;
+        newCountry.code=rndCountryCode;
+        newCountry.translateName = new Object[1];
+
+        given()
+                .spec(reqSpec)
+                .body(newCountry)
+                //.log().all()
+                .when()
+                .post("school-service/api/countries")
+
+                .then()
+                .log().body()
+                .statusCode(201)
+                .extract().path("id");
+        ;
+    }
 
 }
