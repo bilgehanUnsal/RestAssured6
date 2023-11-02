@@ -21,6 +21,9 @@ public class CountryTest {
     RequestSpecification reqSpec;
     String countryID="";
 
+    String rndCountryName="";
+    String rndCountryCode="";
+
     @BeforeClass
     public void Setup(){
         baseURI ="https://test.mersys.io/";
@@ -38,7 +41,7 @@ public class CountryTest {
                 .post("/auth/login")
 
                 .then()
-                .log().all()
+                //.log().all()
                 .statusCode(200)
                 .extract().response().getDetailedCookies();
         ;
@@ -53,8 +56,8 @@ public class CountryTest {
     @Test
     public void createCountry(){
 
-        String rndCountryName= randomUreteci.address().country()+randomUreteci.address().countryCode();
-        String rndCountryCode= randomUreteci.address().countryCode();
+        rndCountryName= randomUreteci.address().country()+randomUreteci.address().countryCode();
+        rndCountryCode= randomUreteci.address().countryCode();
 
         Map<String,String> newCountry=new HashMap<>();
         newCountry.put("name",rndCountryName);
@@ -64,7 +67,7 @@ public class CountryTest {
          given()
                  .spec(reqSpec)
                  .body(newCountry)
-                 .log().all()
+                 //.log().all()
                  .when()
                  .post("school-service/api/countries")
 
@@ -75,8 +78,30 @@ public class CountryTest {
         ;
     }
 
+    // Aynı countryName ve code gönderildiğinde kayıt yapılmadığını yani
+    // createCountryNegative testini yapınız, dönen mesajın already kelimesini içerdiğini test ediniz.
+   @Test(dependsOnMethods = "createCountry")
+   public void  createCountryNegative()
+   {
+       Map<String,String> newCountry=new HashMap<>();
+       newCountry.put("name",rndCountryName);
+       newCountry.put("code",rndCountryCode);
 
+       given()
+               .spec(reqSpec)
+               .body(newCountry)
 
+               .when()
+               .post("school-service/api/countries")
+
+               .then()
+               .log().body()
+               .statusCode(400)
+               .body("message", containsString("already"))
+       ;
+   }
+
+   // updat eCountry testini yapınız
 
 
 }
