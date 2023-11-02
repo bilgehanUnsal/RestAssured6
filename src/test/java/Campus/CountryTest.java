@@ -102,6 +102,27 @@ public class CountryTest {
    }
 
    // updat eCountry testini yapınız
+    @Test(dependsOnMethods = "createCountryNegative")
+    public void updateCountry(){
+        String newCountryName="Updated Country"+randomUreteci.number().digits(5);
+        Map<String,String> updCountry=new HashMap<>();
+        updCountry.put("id",countryID);
+        updCountry.put("name",newCountryName);
+        updCountry.put("code","12345");
+
+        given()
+                .spec(reqSpec)
+                .body(updCountry)
+
+                .when()
+                .put("school-service/api/countries")
+
+                .then()
+                .log().body()
+                .statusCode(200)
+                .body("name", equalTo(newCountryName))
+        ;
+    }
 
 
 }
