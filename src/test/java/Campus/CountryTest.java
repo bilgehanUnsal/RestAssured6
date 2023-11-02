@@ -17,8 +17,9 @@ import com.github.javafaker.Faker;
 
 public class CountryTest {
 
-
+    Faker randomUreteci=new Faker();
     RequestSpecification reqSpec;
+    String countryID="";
 
     @BeforeClass
     public void Setup(){
@@ -52,12 +53,30 @@ public class CountryTest {
     @Test
     public void createCountry(){
 
+        String rndCountryName= randomUreteci.address().country()+randomUreteci.address().countryCode();
+        String rndCountryCode= randomUreteci.address().countryCode();
+
+        Map<String,String> newCountry=new HashMap<>();
+        newCountry.put("name",rndCountryName);
+        newCountry.put("code",rndCountryCode);
+
+         countryID=
          given()
                  .spec(reqSpec)
+                 .body(newCountry)
+                 .log().all()
                  .when()
+                 .post("school-service/api/countries")
 
                  .then()
+                 .log().body()
+                 .statusCode(201)
+                 .extract().path("id");
         ;
     }
+
+
+
+
 
 }
