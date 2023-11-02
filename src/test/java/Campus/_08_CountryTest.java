@@ -15,7 +15,7 @@ import static org.hamcrest.Matchers.*;
 
 import com.github.javafaker.Faker;
 
-public class CountryTest {
+public class _08_CountryTest {
 
     Faker randomUreteci=new Faker();
     RequestSpecification reqSpec;
