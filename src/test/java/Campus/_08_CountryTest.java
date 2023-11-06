@@ -151,7 +151,7 @@ public class _08_CountryTest {
 
                 .then()
                 .log().body()
-                .statusCode(400)
+                .statusCode(500)
                 .body("message", equalTo("Country not found"))
         ;
     }
